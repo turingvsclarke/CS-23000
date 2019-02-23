@@ -37,6 +37,8 @@ while keep_running:
 
         acceptable_products = "" + str(product_number)
 
+        # Assign the next product the next number
+
         product_number = product_number + 1
         
     # Accept the number of the product that the user wants
@@ -54,6 +56,8 @@ while keep_running:
             print("I'm sorry. That's not a valid item. Please try again.")
 
             selection = input()
+
+        # Take input every time the input isn't finished    
 
         selected_product = int(selection)
 
