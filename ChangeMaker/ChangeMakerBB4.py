@@ -1,6 +1,5 @@
 # VENDING MACHINE that allows the user to select and purchase several different entries and then runs the change-making process
-
-# GUI in Python that will include products, prices and allow for user to buy products
+# This could be modified for any number of products and corresponding prices, as long as they are added to the respective lists at the same index
 
 # Print all the products available and their corresponding prices. Ask which product they want
 
