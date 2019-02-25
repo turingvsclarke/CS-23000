@@ -1,76 +1,55 @@
-# GUI in Python that will include products, prices and allow for user to buy products
+# A program that computes how much change you owe after you pay for something
 
-# Print all the products available and their corresponding prices. Ask which product they want
+# Take in the price of the item as before, multiplied by 100
 
-# Now is an infinite loop that always shows the menu. Basically only handles one item at once
+purchase_price = float(input("How much did the item cost?\n"))*1000
 
-keep_running = True
+# Ask for the amount of cash tendered, multiply it by 100
 
-while keep_running:
+cash_tendered = (float(input("How much cash was paid?\n"))*1000)
 
-    print("Which object would you like to buy? Here are your options and their prices. Enter the number corresponding to the entry you want:")
+# Calculate the change in pennies. Note that this assumes they paid enough money
 
-    # Initialize the labelling for numbering the product options
+change = cash_tendered - purchase_price
 
-    product_number = 1
+# Quantitative denominations list and singular/plural denominations descriptors
 
-    collected_cash = 0
+denominations_list = [20000,10000,5000,1000,250,100,50,10]
 
-    # Print and number all the available products
+denominations_plural = ["twenties","tens","fives","ones","quarters","dimes","nickels","pennies"]
 
-    for x in products:
+denominations_single = ["twenty","ten","five","one","quarter","dime","nickel","penny"]
 
-        print(product_number,". " + x.capitalize() + " " + product_cost[x.index()])
+# Tell the user that the amount of change will soon be outputed 
 
-        product_number = product_number + 1
+print("The change is as follows:")
 
-    # Accept the number of the product that the user wants
+# Create a for loop that removes multiples of the denominations for each one in our list
 
-    selected_product = int(input() + "\n")
+for x in denominations_list:
 
-    # checks to make sure that the product selected is a valid product
+    # Use the same modular formula as before
 
-    while selected_product < 1 or selected_product > products.len():
+    denomination_quantity = int((change-(change%x))/x)
 
-        print("I'm sorry. That's not a valid item. Please try again.")
+    change = change%x
 
-        selected_product = int(input() + "\n")
+    # Store each result in a string of change denominations, as long as it's non-empty
 
-    # assigns the price to the entry in the price list with the corresponding
+    if denomination_quantity!=0:
 
-    price = product_cost[selected_product - 1]
+        # Use singular denominations list for singular change
 
-    # prints out how much the item costs
+        if denomination_quantity==1:
 
-    print("That costs",price)
+            # Print number and type of each denomination
 
-    # Checks to make sure that the amount entered is at least as much as the cost
+            print(str(denomination_quantity) + " " + denominations_single[denominations_list.index(x)] + ".")
 
-    while collected_cash < price
+        # Use plural denominations list for plural change
 
-        new_cash = input("You owe ",price - collected_cash,".\n")
+        else:
 
-        collected_cash = new_cash + collected_cash
+            # Print number and type of each denomination
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            print(str(denomination_quantity)+ " " + denominations_plural[denominations_list.index(x)]+".")
