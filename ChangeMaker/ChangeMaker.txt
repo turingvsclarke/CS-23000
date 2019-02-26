@@ -1,0 +1,12 @@
+Change Maker Base Assignment
+Ryan Eades
+
+Goals: Allow the user to enter price and cash tendered and compute the exact change, including the quantity of each English denomination
+of currency.
+
+Input: Asks the user for the price and the cash tendered.
+
+Output: Computes the change, including the exact amount of each denomination (up to twenties).
+
+Steps: Ask the user for a purchase price and convert it to pennies to make the modular arithmetic cleaner. Ask for the amount of cash tendered and convert it to pennies for the same reason. Convert both of these inputs to integers to ensure that the operations are numerical. Calculate the change by subtracting these two quantities. Apply the modulus operator to each of these functions. Subtract this modulus from the initial change amount and divide by the denomination quantity. Subtract how much the the denomination accounts for from the total change and move to the next denomination. This should yield the quantity of each denomination, starting with the biggest denomination (twenties) and working to pennies. Finally, print each amount of each denomination and the 
+corresponding denomination.
