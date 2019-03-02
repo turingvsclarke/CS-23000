@@ -1,5 +1,4 @@
 # A program that allows the user to pick a number and guesses that number based on commands from the user
-# Future version should handle exceptions if the upper bound and lower bound become the same
 # import the random library to allow generation of random numbers
 
 import random
@@ -12,7 +11,7 @@ class Guessing_Game:
 
         # Ask the user to provide an acceptable upper bound and lower bound
 
-        print("Welcome to the guessing game! Please provide the range of numbers to be guessed from today!")
+        print("The game is about to start! First, please provide a range of numbers to be guessed from today so this program doesn't run infinitely.")
 
         keepgoing = True
 
@@ -54,7 +53,7 @@ class Guessing_Game:
 
         # Tell the user each key command
 
-        print("Cool! So I'm going to guess a secret number that you choose.\nReady? First, here are the rules.\nWhen I guess a number, tell me if it is too high, too low, or correct. Indicate these with the following key commands:")
+        print("Cool! So I'm going to guess a secret number that you choose.\nReady? First, here are the rules:\nWhen I guess a number, tell me if it is too high, too low, or correct. Indicate these with the following key commands:")
 
         for key in controls:
 
@@ -86,17 +85,25 @@ class Guessing_Game:
 
                 feedback = "C"
 
+            # Stop the program if user made the range undefined
+
+            elif upper_bound<lower_bound:
+
+                print("But that means the value is one which doesn't match the provided range or isn't an integer. You must have cheated or made a mistake. So technically I win.")
+
+                wrong_guess = False
+
             # If the user inputs the prompt for too low, change the lower bound for the acceptable range and generate a new guess
 
             if feedback == "L":
 
-                # Let the lower bound be the previous guess
+                # Let the lower bound be greater than the previous guess
 
                 lower_bound = guess+1
 
-                # Only generate a new number if the range is defined
+                # Only generate a new number if the range is well defined
 
-                if upper_bound!=lower_bound:
+                if upper_bound>lower_bound:
 
                     # Generate a new number within the acceptable range
 
@@ -112,13 +119,13 @@ class Guessing_Game:
 
             elif feedback == "H":
 
-                # Let the upper bound be the previous guess
+                # Let the upper bound be less than the previous guess
 
                 upper_bound = guess - 1
 
-                # Only generate a new guess if the range still exists
+                # Only generate a new guess if the range is well defined
 
-                if upper_bound!=lower_bound:
+                if upper_bound>lower_bound:
 
                     # Generate a new number within the acceptable range
 
