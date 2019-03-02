@@ -1,5 +1,4 @@
 # A program that allows the user to pick a number and guesses that number based on commands from the user
-# Future version should allow the user to choose to be the one guessing or the one choosing
 # Future version should handle exceptions if the upper bound and lower bound become the same
 # import the random library to allow generation of random numbers
 
@@ -7,7 +6,7 @@ import random
 
 class Guessing_Game:
 
-    # Starts the game by deciding what 
+    # Starts the game by deciding what range of numbers play will be limited to
 
     def start_game(self):
 
@@ -35,22 +34,13 @@ class Guessing_Game:
 
                 random_number = random.randint(lower_bound,upper_bound) 
 
-            # Name error exception if the bounds don't allow for finding a number between them
-
-            except NameError:
-
-        
-                keepgoing = True
-
-                print("I'm sorry, that range doesn't make sense. Please make sure that the upper bound is the bigger number.")
-
             # Value error exception if the user didn't actually input an integer
 
-            except ValueError:
+            except ValueError or upper_bound == lower_bound:
 
                 keepgoing = True
 
-                print("I'm sorry, that didn't seem like an integer to me. Please try to enter the range again.")
+                print("I'm sorry, that didn't seem like a valid range to me. Please try to enter the integer values again, making sure that the upper bound is the bigger number.")
 
         return(upper_bound,lower_bound,random_number)
 
@@ -58,13 +48,21 @@ class Guessing_Game:
 
     def choosing(self,upper_bound,lower_bound,random_number):
 
-        # Create a dictionary, pairing key commands with high, low, and correct
+        # Create a dictionary pairing key commands with high, low, and correct
 
-        controls = {"correct":"c","too high":"h","too low":"l"}
+        controls = {"correct":"(c)","too high":"(h)","too low":"(l)"}
 
         # Tell the user each key command
 
+        print("Cool! So I'm going to guess a secret number that you choose.\nReady? First, here are the rules.\nWhen I guess a number, tell me if it is too high, too low, or correct. Indicate these with the following key commands:")
+
+        for key in controls:
+
+            print("{:<12}{:>6}".format(key,controls[key]))
+
         # Begin the guessing process
+
+        guess = random_number
 
         print("I'm going to start guessing now. Is",guess,"correct? Let me know using the correct key commands.")
 
@@ -77,6 +75,16 @@ class Guessing_Game:
         wrong_guess = True
 
         while wrong_guess:
+            
+            # Stop the program if user input indicates that there is an integer between two successive integers
+
+            if upper_bound == lower_bound:
+
+                # Send the user to the correct condition since the range has no integer between it and must be the bounds
+
+                print("Got it! The answer must be " + str(upper_bound) + " or else you cheated and never had a number.")
+
+                feedback = "C"
 
             # If the user inputs the prompt for too low, change the lower bound for the acceptable range and generate a new guess
 
@@ -86,15 +94,19 @@ class Guessing_Game:
 
                 lower_bound = guess+1
 
-                # Generate a new number within the acceptable range
+                # Only generate a new number if the range is defined
 
-                guess = random.randint(lower_bound,upper_bound-1)
+                if upper_bound!=lower_bound:
 
-                # Tell the user the new guess and ask if that's correct
+                    # Generate a new number within the acceptable range
 
-                print("Is",guess,"correct? Let me know using the correct key commands.")
+                    guess = random.randint(lower_bound,upper_bound)
 
-                feedback = input().capitalize()
+                    # Tell the user the new guess and ask if that's correct
+
+                    print("Is",guess,"correct? Let me know using the correct key commands.")
+
+                    feedback = input().capitalize()
 
             # If the user said the prompt for too high, change the upper bound for the acceptable range and generate a new guess
 
@@ -102,17 +114,21 @@ class Guessing_Game:
 
                 # Let the upper bound be the previous guess
 
-                upper_bound = guess-1
+                upper_bound = guess - 1
 
-                # Generate a new number within the acceptable range
+                # Only generate a new guess if the range still exists
 
-                guess = random.randint(lower_bound,upper_bound)
+                if upper_bound!=lower_bound:
 
-                # Tell the user of the new guess and ask if that's correct
+                    # Generate a new number within the acceptable range
 
-                print("Is",guess,"correct? Let me know using the correct key commands.")
+                    guess = random.randint(lower_bound,upper_bound)
 
-                feedback = input().capitalize()
+                    # Tell the user of the new guess and ask if that's correct
+
+                    print("Is",guess,"correct? Let me know using the correct key commands.")
+
+                    feedback = input().capitalize()
 
             elif feedback == "C":
 
@@ -122,19 +138,19 @@ class Guessing_Game:
 
                 wrong_guess = False
             
-            # Since these are the only acceptable inputs, let the user that their input was unacceptable
+            # Since these are the only acceptable inputs, let the user know that any other input was unacceptable
 
             else:
 
                 print("I'm sorry, that's not a valid command. Here are the acceptable commands to indicate if my guess is correct:")
 
-                feedback = input().capitalize
+                for key in controls:
 
-                # If the user ever says that one number is too low while the one after it is too high, 
+                    print("{:<12}{:>6}".format(key,controls[key]))
 
-                ##if upper_bound == lower_bound + 1:
+                # Take what is hopefully now correct input
 
-                ##  print("hi")
+                feedback = input().capitalize()
 
     # The guessing a number option
 
@@ -144,9 +160,23 @@ class Guessing_Game:
 
         secret_number = random_number
 
-        # We ask the user for an integer input
+        # We ask the user for an integer input and make sure it is an integer
 
-        guess = int(input("Please guess a number between " + str(upper_bound) + "and " + str(lower_bound) + ".\n"))
+        not_working = True
+
+        while not_working:
+            
+            try: 
+                
+                guess = int(input("Please guess a number between " + str(lower_bound) + " and " + str(upper_bound) + ".\n"))
+
+                not_working = False
+
+            except ValueError:
+
+                print("I'm sorry, that wasn't a value I could understand. Please try again, making sure your guess is an integer in the range you picked.")
+
+                not_working = True
 
         # We will keep prompting the user if they didn't guess the number correctly
 
@@ -158,7 +188,7 @@ class Guessing_Game:
 
                 # We tell the user the guess was too high and prompt them to make a new guess
 
-                guess = int(input("Your guess is a little too high. Please guess again. You know the drill: 1 to 100.\n"))
+                print("Your guess is a little too high. Please guess again. You know the drill: ",lower_bound," to " + str(upper_bound) + ".")
 
             # If the guess was lower than the correct number we run a different certain procedure
 
@@ -166,11 +196,31 @@ class Guessing_Game:
 
                 # We tell the user the guess was too low and prompt them to make a new guess
 
-                guess = int(input("Your guess is a little too low. Please guess again. You know the drill: 1 to 100.\n"))
+                print("Your guess is a little too low. Please guess again. You know the drill: ",lower_bound," to " + str(upper_bound) + ".")
 
-        # We congratulate the user if they guess the number correctly
+            # Get another integer, running an exception to make sure it is an integer
+
+            not_working = True
+
+            while not_working:
+                
+                try: 
+                    
+                    guess = int(input())
+
+                    not_working = False
+
+                except ValueError:
+
+                    print("I'm sorry, that wasn't a value I could understand. Please try again, making sure your guess is an integer in the range you picked.")
+
+                    not_working = True
+
+        # We congratulate the user if the loop ended, meaning they guessed the number correctly
 
         print("Congratulations! You guessed the secret number!")
+
+########## GAME IS BEGUN HERE, EVERYTHING ABOVE IS THE CLASS DEFINING HOW THE GAME RUNS
 
 # Ask the user if they want to guess a number, choose a number, or quit
 
@@ -178,9 +228,11 @@ choice = input("Hi! Welcome to the guessing game! You can either choose a secret
 
 # Begin the game
 
-playing = True
-
 new_game = Guessing_Game()
+
+# Initiate a menu sequence
+
+playing = True
 
 while playing:
 
@@ -190,11 +242,15 @@ while playing:
 
         new_game.guessing(x,y,z)
 
+        choice = input("That was fun!\nYou can now choose to play again or quit the game. Press 'g' to guess a number, 'c' to choose a number, or 'q' to quit.\n").capitalize()
+
     elif choice == "C":
 
         (x,y,z) = new_game.start_game()
 
         new_game.choosing(x,y,z)
+
+        choice = input("That was fun!\nYou can now choose to play again or quit the game. Press 'g' to guess a number, 'c' to choose a number, or 'q' to quit.\n").capitalize()
 
     elif choice == "Q":
 
