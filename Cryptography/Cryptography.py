@@ -4,7 +4,7 @@
 
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-key = "QWERTYUIOPASDFGHJKLZXCVBNM"
+key = "XPMGTDHLYONZBWEARKJUFSCIQV"
 
 # Create a main function that looks exactly like Andy's function 
 
@@ -17,7 +17,6 @@ def main():
 
 
     response = menu()
-
 
 
     if response == "1":
@@ -71,21 +70,7 @@ def menu():
 
         print("{:<4}{:>8}".format(option_numbers[options.index(x)],x))
 
-    bad_input = True
-
-    while bad_input:
-
-        try:
-
-            option_number = input("Please enter the number of what you would like to do.\n")
-
-            bad_input = False
-
-        except ValueError:
-
-            print("That's not a valid option.")
-
-            bad_input = True
+    option_number = input("Please enter the number of what you would like to do.\n")
 
     return(option_number)
 
@@ -99,11 +84,11 @@ def encode(self):
 
     for x in plain_text:
 
-        if x in key:
+        if x in alphabet:
 
-            index = key.index(x)
+            index = alphabet.index(x)
 
-            cipher = cipher + alphabet[index]
+            cipher = cipher + key[index]
 
     return(cipher)
 
@@ -117,11 +102,11 @@ def decode(self):
 
     for x in cipher:
 
-        if x in key:
+        if x in alphabet:
 
-            index = alphabet.index(x)
+            index = key.index(x)
 
-            plain_text = plain_text + key[index]
+            plain_text = plain_text + alphabet[index]
 
     return(plain_text)
 

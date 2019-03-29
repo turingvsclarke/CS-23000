@@ -107,22 +107,24 @@ while keep_running:
 
     for z in selectionList:
 
-        print(products[z-1].capitalize(),product_cost[z-1])    
+        # Print each product left justified and each cost right justified
 
-    # Print the total cost and the paid amount
+        print("{:<20}{:>10}".format(products[z-1].capitalize(),product_cost[z-1]))
+
+    # Print the total cost and the paid amount, right justified"
 
     print("Total: ",purchase_price)
     print("Cash tendered: ",cash_tendered)
 
     # Run the basic process to compute change
 
-    # Print out the change
-
-    print("Change: ",cash_tendered - purchase_price)
-
     # Like before, covert the change to be represented in pennies by multiplying the change by 100
 
-    change = int((cash_tendered - purchase_price)*100)
+    change = round(float((cash_tendered - purchase_price)*100),2)
+
+    # Print out the change
+
+    print("Change: ",round(float(cash_tendered-purchase_price),2))
 
     # List for every denomination in English as singular and plural and quantitatively
 

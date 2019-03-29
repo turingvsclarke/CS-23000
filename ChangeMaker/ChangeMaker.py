@@ -2,11 +2,11 @@
 
 # Ask for a purchase price, multiply it by 100
 
-purchase_price = int(input("How much did the item cost?\n"))*100
+purchase_price = int(float(input("How much did the item cost?\n"))*100)
 
 # Ask for the amount of cash tendered, multiply it by 100
 
-cash_tendered = int(input("How much cash was paid?\n"))*100
+cash_tendered = int(float(input("How much cash was paid?\n"))*100)
 
 # Calculate the change in pennies. Note that this assumes they paid enough money
 
@@ -63,8 +63,11 @@ number_of_pennies = change
 # Print the change by denomination
 
 print("The change is as follows:")
-print(number_of_ones," ones."
+print(number_of_twenties," twenties.")
+print(number_of_tens," tens.")
+print(number_of_fives," fives.")
+print(number_of_ones," ones.")
 print(number_of_quarters," quarters.")
 print(number_of_dimes," dimes.")
-print(number_of_nickels," nickels."
+print(number_of_nickels," nickels.")
 print(number_of_pennies," pennies.")

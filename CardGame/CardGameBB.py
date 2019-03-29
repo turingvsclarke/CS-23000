@@ -8,7 +8,7 @@ COMP = 2
 cardLoc = [0] * NUMCARDS
 suitName = ("hearts", "diamonds", "spades", "clubs")
 rankName = ("Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King")
-playerName = ("deck", "player", "computer")
+playerName = ("deck","player", "computer")
 
 # create a clear deck function that 
 
@@ -24,9 +24,9 @@ def assignCard(self):
 
   card = random.randint(0,len(cardLoc)-1)
 
-  # If that card already has that player value, pick another random number so we aren't just assigning the player to the same card multiple times
+  # Only use that card if its in the deck at the moment it is picked
 
-  while cardLoc[card] == self:
+  while cardLoc[card] != DECK:
 
     card = random.randint(0,len(cardLoc)-1)
 
@@ -61,7 +61,7 @@ def showDeck():
 
     # The suit will be the value of the suitName at the index y divided by 13 converted to an integer
 
-    suit = suitName[int(x/13)]
+    suit = suitName[x//13]
 
     # Print out which card it is, of what rank, and of what suit all neatly left formatted
 
@@ -95,7 +95,7 @@ def showHand(self):
 
     if cardLoc[x] == self:
 
-      print("{} of {}".format(rankName[x%13],suitName[int(x/13)]))
+      print("{} of {}".format(rankName[x%13],suitName[x//13]))
 
 # The function should find out all the places where that number is in the deck
 
@@ -106,8 +106,8 @@ def main():
   clearDeck()
 
   for i in range(5):
+    assignCard(COMP) 
     assignCard(PLAYER)
-    assignCard(COMP)
 
   showDeck()
   showHand(PLAYER)
