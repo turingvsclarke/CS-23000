@@ -7,30 +7,29 @@ alphabet = "abcdefghijklmnopqrstuvwxyz"
 # of the individual rotors, so we are going to define a rotors attribute that will be a list of rotors.
 class Enigma():
 
-    def __init__ (self,state = 0, size = 0, rotors = []):
+    def __init__ (self,state = 0, size = 0, rotors = [],reflector = ""):
         object.__init__(self)
         self.setState(state)
         self.setSize(size)
         self.setrotors(rotors)
+        self.setReflector(reflector)
 
     def setState(self,state):
         self._state = state
-
     def getState(self):
         return self._state
-
     def setrotors(self,rotors):
         self._rotors = rotors
-
     def getrotors(self):
         return self._rotors
-
     def setSize(self,size):
         self._size = size
-
     def getSize(self):
         return self._size
-
+    def setReflector(self,reflector):
+        self._reflector = reflector
+    def getReflector(self):
+        return self._reflector
     # This is a huge problem. Currently, we are creating new rotors each time we try to get the rotors of the Enigma.
     # We need to instead pass the list of rotor objects to the Enigma as an attribute.
     # We send it a string of strings as an attribute and it populates its Rotors objects to have all these strings
@@ -92,15 +91,12 @@ class Rotor():
         # We chop off the first state letters (1st state=only one letter) and put it at the front of the string
         return self.getrotor()[(26-state):26] + self.getrotor()[0:(26-state)]
           
-
     # Each rotor is going to be used as a key, which is determined by its rotor string and its state.
       
 # For each rotor, we need to have a state. These states will change each time we call the rotateRotor method. The state will be a number from 0 through 25 indicating how many 
 # letters the rotor has rotated through. The state at each point should be changed from x to (x+1)%26. 
 # When a rotor's state reaches 0 (after rotation), it will switch the state of the rotor to the left (rotor r+1). This will continue for however many rotors we have.
-
 # Each rotor will also need to have a position attribute, 0 through n. This should be immutable.
-
 # Take input from the user
 
 def createRotor():
@@ -110,17 +106,41 @@ def createRotor():
     global alphabet
 
     # Store the alphabet string locally so that we don't destroy the global variable for future use
-    alphabet1 = alphabet
+    # alphabet1 = alphabet
 
-    while len(alphabet1)>0:
+    for i in range(26):
 
-        index = random.randint(0,len(alphabet1)-1)
-        letter = alphabet1[index]
+        index = random.randint(0,25)
+        letter = alphabet[index]
+
+        # Make sure that the letter isn't already in the rotor string
+        while letter in newrotor:
+            letter = alphabet[random.randint(0,25)]
         newrotor = newrotor + letter
-
-        alphabet1 = alphabet1.replace(letter,"")
     
     return newrotor
+
+def createReflector():
+
+    global alphabet
+
+    # Create a reflector by picking a random \
+    # Initiate a 26 character string
+    Reflector = "0"*26
+
+    # Take each letter from the alphabet and stick it in a random place. Aka lets say 'a' goes to the kth spot. Then
+    # find a's place in the alphabet and put 
+    for x in alphabet:
+        if x not in Reflector:
+            index = random.randint(0,25)
+            # Make sure there is no other letter already there
+            while Reflector[index] != "0":
+                index = random.randint(0,25)
+            Reflector = Reflector[0:index] + x + Reflector[(index+1):26]
+            index2 = alphabet.index(x)
+            Reflector = Reflector[0:index2] + alphabet[index] + Reflector[(index2+1):26]
+
+    return Reflector
 
 def encrypt(message,enigma):
     # Initialize an empty string that will eventually hold the fully encrypted text
@@ -138,16 +158,24 @@ def encrypt(message,enigma):
         # rotor key and the new encryption message, which switches each time. At the end of the for loop we should have the correct letter
         
         rotors = enigma.getRotors()
-
+        #pdb.set_trace()
         for y in range(len(enigma.getRotors())):
             # Find the letter's place in the alphabet
             index = alphabet.index(letter)
             # Assign the letter to the value of the xth rotor key at that index and then start over. Each time its then encrypting an encryption
-            #pdb.set_trace()
             key = enigma.getRotorKey(y)
 
             letter = key[index]
 
+        # Match to the correct letter via the reflector
+        index = alphabet.index(letter)
+        letter = enigma.getReflector()[index]
+
+        while y>=0:
+            key=enigma.getRotorKey(y)
+            index = key.index(letter)
+            letter = alphabet[index]
+            y-=1
         encryption = encryption + letter
 
         # Rotate the Enigma after each letter has been translated
@@ -161,7 +189,8 @@ def main():
     keepgoing = True
     # We are going to want to intialize the rotors only once so that they stay with the Enigma the whole time.
     # To do this, we need to know if the user wants to use a previous rotor string or create his own
-    # Create an Enigma object each time the program runs, not each time it loops
+    # Create an Enigma object each time the program runs, not each time it loops. 
+    # Each Enigma machine has a random reflector built in that can't be moved.
     numberofRotors = int(input("Number of Rotors: "))
     rotor_decision = input("Do you have a list of rotor strings?(y/n)\n")
     
@@ -179,10 +208,10 @@ def main():
             rotor = createRotor()
             Rotors.append(rotor)
 
-    enigma = Enigma(0,numberofRotors,Rotors)
+    enigma = Enigma(0,numberofRotors,Rotors,createReflector())
     while keepgoing:
 
-        user_choice = input("Do you want to 1. Encrypt 2. Quit 3. Change the rotor states\n")
+        user_choice = input("Do you want to 1. Encrypt 2. Quit 3. Change the rotor states 4. Display Enigma state\n")
 
         if user_choice == "1":
 
@@ -202,6 +231,9 @@ def main():
 
             rotor_position = int(input("State:\n"))
             enigma.setState(rotor_position)
+
+        elif user_choice == "4":
+            print(enigma.getState())
 
         else:
 
