@@ -4,13 +4,14 @@ import pdb
 alphabet = "abcdefghijklmnopqrstuvwxyz"
 
 # We are going to have a class that describes the current overall state of the Enigma machine and its size. This number will determine the states 
-# of the individual rotors
+# of the individual rotors, so we are going to define a rotors attribute that will be a list of rotors.
 class Enigma():
 
-    def __init__ (self,state = 0, size = 0):
+    def __init__ (self,state = 0, size = 0, rotors = []):
         object.__init__(self)
         self.setState(state)
         self.setSize(size)
+        self.setrotors(rotors)
 
     def setState(self,state):
         self._state = state
@@ -18,8 +19,11 @@ class Enigma():
     def getState(self):
         return self._state
 
-    # Making state a property so that it can be accessed by the Rotor
-    state = property(fget = getState, fset = setState)
+    def setrotors(self,rotors):
+        self._rotors = rotors
+
+    def getrotors(self):
+        return self._rotors
 
     def setSize(self,size):
         self._size = size
@@ -27,13 +31,16 @@ class Enigma():
     def getSize(self):
         return self._size
 
+    # This is a huge problem. Currently, we are creating new rotors each time we try to get the rotors of the Enigma.
+    # We need to instead pass the list of rotor objects to the Enigma as an attribute.
+    # We send it a string of strings as an attribute and it populates its Rotors objects to have all these strings
+    # as their individual values.
+
     def getRotors(self):
 
         Rotors = []
-        for i in range(self.getSize()):
-            # For the ith rotor we have a state of 0, a position of i, and a new rotor string is generated each time
-            rotor = createRotor()
-            Rotors.append(Rotor(i,rotor))
+        for x in range(len(self.getrotors())):
+            Rotors.append(Rotor(x,self.getrotors()[x]))
 
         return Rotors
 
@@ -55,7 +62,6 @@ class Enigma():
         key = self.getRotors()[rotor_number].getKey(self.getState())
         return key
           
-
 class Rotor():
     # This is my class of rotor objects. It has three attributes: state, position, and rotor (the string of letters defining it)
     # Let's initialize the object. Note that its not passed a state because it doesn't really have its own state. Its state is dependent upon 
@@ -149,23 +155,58 @@ def encrypt(message,enigma):
         enigma.updateRotors()
 
     return encryption
-        
+
 def main():
 
     keepgoing = True
+    # We are going to want to intialize the rotors only once so that they stay with the Enigma the whole time.
+    # To do this, we need to know if the user wants to use a previous rotor string or create his own
+    # Create an Enigma object each time the program runs, not each time it loops
+    numberofRotors = int(input("Number of Rotors: "))
+    rotor_decision = input("Do you have a list of rotor strings?(y/n)\n")
+    
+    Rotors = []
 
+    if rotor_decision == "y":
+
+        for i in range(numberofRotors):
+            Rotors.append(input("Next rotor string:"))
+
+    else:
+        
+        for i in range(numberofRotors):
+            # We are generating a list of rotor strings since the user didn't pass us such a list
+            rotor = createRotor()
+            Rotors.append(rotor)
+
+    enigma = Enigma(0,numberofRotors,Rotors)
     while keepgoing:
 
-        message = input("Plaintext: ")
-        numberofRotors = int(input("Number of Rotors: "))
-        # Create a new Enigma machine
-        enigma = Enigma(0,numberofRotors)
+        user_choice = input("Do you want to 1. Encrypt 2. Quit 3. Change the rotor states\n")
 
-        # Create however many rotors the user wanted 
-        # encrypt the message
+        if user_choice == "1":
 
-        encryption = encrypt(message,enigma)
-        print(encryption)
+            message = input("Plaintext: ")
+
+            # Create however many rotors the user wanted 
+            # encrypt the message
+
+            encryption = encrypt(message,enigma)
+            print(encryption)
+
+        elif user_choice == "2":
+
+            keepgoing = False
+
+        elif user_choice == "3":
+
+            rotor_position = int(input("State:\n"))
+            enigma.setState(rotor_position)
+
+        else:
+
+            print("Please try again")
+
 # create as many rotors as we need
 # We need to be able to initiate an object for each of these rotors. That's tough.
 
