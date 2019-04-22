@@ -39,7 +39,11 @@ def EncryptionResult():
 # At the end we want to have a login page, so the table page will be dependent upon that page. Eventually, the route will depen
 @get('/MachineTable')
 def EnigmaTable():
-    return template('MachineTable.html')
+    return template('MachineTable.html',c=c,enigmaDB=enigmaDB)
+
+@post('/RotorTable')
+def RotorTable():
+    return template('RotorTable.html',c=c,enigmaDB=enigmaDB)
 
 @get('/addMachine')
 def Addmachine():

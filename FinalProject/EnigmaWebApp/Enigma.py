@@ -1,7 +1,7 @@
 import random
 import pdb
 
-alphabet = "abcdefghijklmnopqrstuvwxyz"
+alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 # We are going to have a class that describes the current overall state of the Enigma machine and its size. This number will determine the states 
 # of the individual rotors, so we are going to define a rotors attribute that will be a list of rotors.
@@ -27,7 +27,7 @@ class Enigma():
     def getSize(self):
         return self._size
     def setReflector(self,reflector):
-        self._reflector = reflector
+        self._reflector = reflector.upper()
     def getReflector(self):
         return self._reflector
     # This is a huge problem. Currently, we are creating new rotors each time we try to get the rotors of the Enigma.
@@ -65,7 +65,7 @@ class Rotor():
     # This is my class of rotor objects. It has three attributes: state, position, and rotor (the string of letters defining it)
     # Let's initialize the object. Note that its not passed a state because it doesn't really have its own state. Its state is dependent upon 
     # the state of the Enigma
-    def __init__ (self,position = 0,rotor = []):
+    def __init__ (self,position = 0,rotor = ""):
             object.__init__(self)
             self.setPosition(position)
             self.setrotor(rotor)
@@ -81,7 +81,7 @@ class Rotor():
         return self._position
 
     def setrotor(self,rotor):
-        self._rotor = rotor
+        self._rotor = rotor.upper()
 
     def getrotor(self):
         return self._rotor
@@ -146,9 +146,7 @@ def encrypt(message,enigma):
     # Initialize an empty string that will eventually hold the fully encrypted text
     encryption = ""
     global alphabet
-
-    # store the alphabet string locally so that way we don't destroy it for future use
-    alphabet1 = alphabet
+    message = message.upper()
 
     # If the value isn't in the alphabet, don't encrypt it
     # Iterate through each message, encrypting one letter at a time
