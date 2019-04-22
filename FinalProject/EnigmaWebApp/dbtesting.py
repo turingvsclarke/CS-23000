@@ -10,22 +10,14 @@ enigmaDB = sqlite3.connect("enigmas.db")
 enigmaDB.row_factory = sqlite3.Row
 c = enigmaDB.cursor()
 
-# Let's now try to get a list of all the ids of all the machines and how many rotors they have
+# Time to test checking if there is already a machine of a certain name in our database
+def checkforname(name):
+    copycat=False
+    result = c.execute("SELECT * FROM enigmas WHERE name = ?",(name,))
+    for x in result:
+        copycat = True
 
-result = c.execute("SELECT * FROM enigmas")
-ids = []
-names = []
-sizes = []
-for x in result:
-    ids.append(x['id'])
-    names.append(x['name'])
-# Find out how many rotors there are for each machine
-for x in ids:
-    result = c.execute("SELECT * FROM enigma_rotors WHERE enigma_id = ?",(x,))
-    size = 0
-    for y in result:
-        size+=1
-    sizes.append(size)
-print(ids,names,sizes)
-enigmaDB.commit()
+    return copycat
 
+copycat = checkforname("eggsalad")
+print(copycat)

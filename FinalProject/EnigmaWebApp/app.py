@@ -53,4 +53,12 @@ def Addmachine():
 def AddingMachine():
     return template('addingMachine.html', c = c, enigmaDB = enigmaDB)
 
+@get('/DeleteMachine')
+def deleteMachine():
+    return template('DeleteMachine.html',c=c,enigmaDB=enigmaDB)
+
+@post('/DeletingMachine')
+def deletingMachine():
+    return template("DeletingMachine.html",c=c,enigmaDB=enigmaDB)
+
 run(host='localhost',port = 8080,debug = True, reloader = True)

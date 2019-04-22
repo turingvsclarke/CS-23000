@@ -48,5 +48,13 @@ i=0
         %end    
     </table>
 
+    <form action = "/DeleteMachine" method="get">
+        <input type = "hidden" name="enigma_id" value = "{{enigma_id}}">
+        <button type="submit">Delete</button>
+    </form>
+    <form action = "/MachineTable" method="get">
+        <button type = "submit">Machines</button>
+    </form>
+
 </body>
 </html>

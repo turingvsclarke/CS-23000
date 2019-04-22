@@ -40,13 +40,21 @@ enigmaDB.commit()
         %for x in range(len(ids)):
         <tr>
             <td>{{ids[x]}}</td>
-            <td>{{names[x]}}</td>
+            <td>
+                <form action = "/RotorTable" method = "post">
+                    <input type = "hidden" name = "enigma_id" value = "{{ids[x]}}">
+                    <button type = "submit">{{names[x]}}</button>
+                </form>
+            </td>
             <td>{{sizes[x]}}</td>
         </tr>
         %end
     </table>
     <form action = '/addMachine' method = "get">
         <button type = "submit">Create New Machine</button>
+    </form>
+    <form action='/DeleteMachine' method = "get">
+        <button type = "submit">Delete Machine</button>
     </form>
     <form action = '/' method = "get">
         <button type = "submit">Menu</button>
