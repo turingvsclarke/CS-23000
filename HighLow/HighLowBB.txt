@@ -1,0 +1,44 @@
+Algorithm for HighLow Blackbelt
+Ryan Eades
+
+Goals:
+The goal is to create a game that incorporates the base assignment for a full fledged guessing game, in which the user can guess a secret number or ask a secret number.
+This program will have two main parts, a game and a menu. The menu will prompt the user to choose between guessing a secret number and choosing a secret number for the 
+computer to guess. The game class will be divided into three main methods, one defined for the computer guessing a number(meaning the user chooses) and one designed for the
+computer generating a random number(meaning the user guesses). The final method will initialize the game. 
+
+Input(menu):
+The menu  will allow one input out of three options: 'g','c', and 'q'. These respectively will initiate the guess method, the choose method, or quitting the program. If the
+user enters other input, this will be handled by a program prompt. This menu will infinitely loop until the user decides to quit the program.  
+
+Output(menu):
+The menu will inform the user that each individual round of the game is over and prompt them to select options again. It will also inform the user if their input wasn't one 
+of the valid menu options.
+
+Input(start game):
+The user will input two numbers that will define the lower and upper bounds of a range for which the guessing should be done(i.e. 1 to 100, -40 to 1000). 
+
+Output(start game):
+This method will print out prompts to enter high and low bounds for the range, as well as indications that input is unacceptable if an exception is called. The start_game method 
+returns the bounds of the range as well as a random number within that interval. This will either be passed to the choosing method as the first of many computer-generated 
+guesses, or to the guessing method as the secret number for the user to guess. 
+
+Input(choosing):
+The choosing method will take the bounds of the range and the random number as arguments. It will also recieve user feedback about whether or not the randomly generate guess
+is too high, too low, or correct.
+
+Output(choosing):
+The choosing method will output the various commands for the user to indicate if the guess is too high, too low, or correct. It will also narrow the range to be guessed from
+depending on this user feedback, and inform the user of the new "guess". All other outputs will let the user know if the input was unacceptable.
+
+Input(guessing):
+The guessing method will take as input integer guesses and continue to do so until the guess is correct.
+
+Output(guessing):
+The guessing method print out feedback indicating to the user that the guess was too high, too low, or correct. It will continue to give feedback and prompt the user for input
+until the guess is correct, when it will tell the user the answer was correct. It will also print the  
+
+Steps:
+The main steps involved were to define the three different methods within the main "Guessing_Game" class and create while loops to continually recieve or create guesses. 
+Additional steps include creating exceptions for all of the possible errors created by user input. These include providing values that aren't integers, providing a range 
+for the guessing game that isn't well defined, or entering values when prompted for key commands that aren't among the list of acceptable control key values.

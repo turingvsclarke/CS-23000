@@ -1,0 +1,61 @@
+Cryptography Algorithm
+Ryan Eades
+
+Goals:
+Use Andy's starter code to create a program that can encrypt and decrypt messages using a substitution cypher. It should include functions that do each of these things, as well as a menu that interacts
+with the user and determines if they want to encrypt messages, decrypt them, or leave the program.
+
+Input(Menu function):
+The menu function recieves one input, the number of the task which the user would like to have performed. The menu function is passed no arguments.
+
+Output(Menu function): 
+The menu function outputs a list of the various options and the corresponding numbers to enter to indicate the various possible options. It also outputs a prompt to the user to select one of these options.
+It returns the number of the task which the user inputs.
+
+Input(Encode function):
+The encode function takes no input but is passed the string which the user would like to encode.
+
+Output(Encode function):
+The encode function outputs a copy of the string which the user would like to encode, modified so each letter is substituted with the corresponding letter from the key string.
+
+Input(Decode function):
+The decode function takes no input but is passed the string which the user would like to decode.
+
+Output(Decode function):
+The decode function outputs a copy of the string which ther user would like to decode, modified so each letter is substituted with the corresponding letter from the alhpabet string.
+
+Steps: 
+1. Create two strings that will be the regular alphabet and the key to be used
+	A. Create one string that is the regular alphabet with no spaces
+	B. Create a key string by using Andy's key string, a scrambled up string of letters
+
+2. Create a main function that looks exactly like Andy's by copying and pasting his function
+
+3. Create a menu function that has no input but returns the option number of what the user wants to do
+	A. Create a list of option numbers 0,1,2 with closed parentheses around them to make it look nice
+	B. Create a list of options: Quit, Encode, Decode
+	C. Print out a cute menu which is basically a numbered list of all the options, nicely formatted like a menu
+	D. Ask the user to enter the number of which operation they want to perform
+	E. Return this user-chosen option
+
+4. Create an encode function that takes string input and returns a jumbled up(encoded) string
+	A. Translate the string to upper case
+	B. Initiate an empty list which will become the resultant encoded string
+	C. Create a loop which generates the encoded version of the string by converting each letter of the string
+		i. Make sure that the value is a letter in the alphabet, ignoring all values not in the alphabet
+		ii. Determine the index of that value in the alphabet
+		iii. Add the value at the same index of the key list to the end of the cipher string
+		iv. Repeat the same steps for each value in the string to be encoded
+	D. Return the cipher string
+
+5. Create a decode function that takes a presumably jumbled string input and returns the plaintext it presumably came from
+	A. Convert the string to upper case
+	B. Initiate a new string that will become the plaintext of the function
+	C. Create a for loop that will generate the correct plaintext string by converting each letter to a different letter
+		i. Make sure that the value is a letter in the alphabet, ignoring anything not in the alphabet
+		ii. Determine the index of the value in the key string
+		iii. Add the value at the same index in the alphabet string to the plaintext string
+		iv. Repeat this for each value in the string to be decoded
+	D. Return the plaintext string
+	
+6. Create an instance of the main funtion

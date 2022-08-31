@@ -1,0 +1,21 @@
+;;A basic multiplier that can multiply two positive, nonzero integers.
+
+;; Add counter to itself.
+begin1:LOD product	
+    ADD counter
+	STO product
+;; Each time counter is added to itself, it decreases a value.
+begin3:LOD cntDn
+    DEC
+	STO cntDn
+;;When counter is added to itself cntDn times it stops,
+;;otherwise it adds the counter to itself again.
+    JMZ quit
+	JMP begin1
+
+quit:HLT
+
+;; Numbers to be multiplied are cntDn and counter, result stored in product.
+cntDn:10
+product:0
+counter:6
