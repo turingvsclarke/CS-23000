@@ -1,0 +1,78 @@
+Cryptography Blackbelt Algorithm
+Ryan Eades
+
+Goals:
+Use Andy's starter code to create a program that can encrypt and decrypt messages using a substitution cypher. It should include functions that do each of these things, as well as a menu that interacts
+with the user and determines if they want to encrypt messages, decrypt them, or leave the program.
+
+Input(Menu function):
+The menu function recieves two inputs, the number of the task which the user would like to have performed and the user's decision about whether or not to generate a random key. The menu function is passed no arguments.
+
+Output(Menu function): 
+The menu function outputs a list of the various options and the corresponding numbers to enter to indicate the various possible options. It also outputs prompts to the user to select one of these options and whether or not they want to generate a new key or use the old one.
+It returns the number of the task which the user inputs and their decision about generating a new key.
+
+Input(Encode function):
+The encode function takes no input but is passed the string which the user would like to encode.
+
+Output(Encode function):
+The encode function outputs a copy of the string which the user would like to encode, modified so each letter is substituted with the corresponding letter from the key string.
+
+Input(Decode function):
+The decode function takes no input but is passed the string which the user would like to decode.
+
+Output(Decode function):
+The decode function outputs a copy of the string which ther user would like to decode, modified so each letter is substituted with the corresponding letter from the alhpabet string.
+
+Steps: 
+1. Create two strings that will be the regular alphabet and a default key to be used if the user doesn't want to generate a new one.
+	A. Create one string that is the regular alphabet with no spaces
+	B. Create a key string by using Andy's key string, a scrambled up string of letters
+
+2. Create a main function that looks exactly like Andy's with new exceptions to handle the decision about generating a new key.
+	A. Generate a new key and store it as the default key if the user indicated they wanted a new key
+	B. Use the stored default key if the user indicated they wanted a new key
+	C. If the input regarding the decision to generate a key string was invalid, jump to the already created else conditional for handling invalid input.
+
+3. Create a menu function that has no input but returns the option number of what the user wants to do
+	A. Create a list of option numbers 0,1,2 with closed parentheses around them to make it look nice
+	B. Create a list of options: Quit, Encode, Decode
+	C. Print out a cute menu which is basically a numbered list of all the options, nicely formatted like a menu
+	D. Ask the user to enter the number of which operation they want to perform
+	E. Return this user-chosen option
+	F. Ask the user to enter whether they want a new key
+	G. Return this decision
+
+4. Create an encode function that takes string input and returns a jumbled up(encoded) string
+	A. Translate the string to upper case
+	B. Initiate an empty list which will become the resultant encoded string
+	C. Create a loop which generates the encoded version of the string by converting each letter of the string
+		i. Make sure that the value is a letter in the alphabet, ignoring all values not in the alphabet
+		ii. Determine the index of that value in the alphabet
+		iii. Add the value at the same index of the key list to the end of the cipher string
+		iv. Repeat the same steps for each value in the string to be encoded
+	D. Return the cipher string
+
+5. Create a decode function that takes a presumably jumbled string input and returns the plaintext it presumably came from
+	A. Convert the string to upper case
+	B. Initiate a new string that will become the plaintext of the function
+	C. Create a for loop that will generate the correct plaintext string by converting each letter to a different letter
+		i. Make sure that the value is a letter in the alphabet, ignoring anything not in the alphabet
+		ii. Determine the index of the value in the key string
+		iii. Add the value at the same index in the alphabet string to the plaintext string
+		iv. Repeat this for each value in the string to be decoded
+	D. Return the plaintext string
+	
+6. Create an instance of the main funtion
+
+7. Create a function that generates a random, jumbled up string containing exactly the letters of the alphabet
+	A. Pass the function a copy of the alphabet key to be altered
+	B. Initiate a new string that will become the key 
+	C. Create a while loop that takes away letters from the alphabet key and places them in a new spot in a key string. 
+		i. Generate a random natural number that corresponds to an existing index of the alphabet string
+		ii. Add the letter in the alphabet
+		iii. Remove the letter we just used from the alphabet string
+		iv. Repeat this process until there are no more letters left
+	D. Print out the key for the user
+	E. Return this key 
+ 

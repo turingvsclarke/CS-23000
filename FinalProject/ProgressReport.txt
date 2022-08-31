@@ -1,0 +1,26 @@
+The Enigma
+Ryan Eades
+
+Great progress has been made so far on the Enigma project. My algorithm in my original Project Proposal has grown
+exponentially as I have actually implemented my ideas. At this point, I have a working, command-line Enigma machine. Each time it runs it initiates a machine
+based on user input for the number of rotors the Enigma should have. I developed the two classes I had hoped to and figured out how aggregation works so that one class depends upon another (and not the converse).
+
+The goal for this weekend is to develop a UI for the project using Bottle that will allow the user to store different Enigma machines and select the settings of each machine. That way they can actually use the Enigma for what
+it was for, mainly being able to encrypt messages based only on a private key (table of rotor settings) established beforehand.
+
+Here are my milestones and when I hope to achieve them:
+
+Saturday
+
+- Create a web app with a menu page, two encryption pages, and a page that has the table of Enigma machines on it. This will use Bottle and will import the .py file I already have for the command-line version.
+- Modify the Enigma program to allow the user to select and change their rotor settings.
+- Build a SQL database that will store a table of all the machines used thus far (a simple database with no data normalization, just a table with each machine object that has been initiated and each corresponding rotor it has)
+- Modify the Enigma program so that it calculates the number of possible Enigma machines given the number of rotors that the user has entered
+- Modify the Enigma program so that it allows the user to either generate new rotors or use old ones (this will be critical when we are actually storing each machine)
+- Update the documentation to reflect all these updates
+
+Sunday
+
+- Finish the SQL database 
+- Create a login feature that will make the app have a different table page for each user
+- Stylize the app using CSS

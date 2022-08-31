@@ -1,0 +1,33 @@
+;;Divider: put in any two positive integers and a quotient and remainder are 
+;;respectively put in the first two addresses. First number is dividend
+;;and second is divisor. Division by zero makes the computer
+;;run forever, a fitting consequence for someone who tried to divide by zero
+
+div1:20
+div2:3
+remainder:0
+quotient:0
+
+;;Take the dividend and subtract off the divisor until its negative
+
+begin: LOD div1
+	SUB div2
+	STO div1
+	JMN finish
+	LOD quotient
+	INC quotient
+	STO quotient
+	JMP begin
+
+;;Add the divisor back and store this value as a remainder
+
+finish:ADD div2
+	STO remainder
+    quit
+
+quit:LOD quotient
+	STO 0
+	LOD remainder
+	STO 1
+	HLT
+    
