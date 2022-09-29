@@ -1,0 +1,27 @@
+Blackbelt ChangeMaker Algorithm
+Ryan Eades
+
+Goals:
+Create a vending machine that has a list of products and corresponding prices and
+allows a user to buy as many products as they want. It will then print off a receipt and verbalize returning correct change.
+
+Input: 
+The user will provide the number corresponding to each entry they want and be able to "checkout" once they're done shopping. 
+They will also need to "pay" by entering dollar amounts.
+
+Output:
+The program will have two major outputs. First, it will print a numbered list of all of the products and their prices. 
+It will tell the user how much the total is. Once the user has paid, it will print a "receipt", including the products purchased 
+and their prices, the total for the order, the dollar amount paid, and the change back, including the exact quantity of each denomination.
+
+Steps:
+Create a list of all the products and another list of prices in which the nth product corresponds to the nth price. 
+Print a numbered list of these products and their prices. Prompt the user to enter as many products as they want. 
+Check to make sure that this input corresponds to one of the products and if it does, store the products in a list of selections. 
+Allow the user to quit the selection process when they type "finish". For each entry in the selection list, add its price to a running total. 
+Tell the user this total and prompt them to type a dollar amount. Ask the user for more money if they didn't pay enough. 
+Print out all the items they purchased, with text justification corresponding to normal receipt formatting. 
+Print out the cash tendered and the total for the order. 
+Finally, run the change-making process as in the base assignment, using the total and paid amounts to deduce the total change and the quantity 
+of each dollar denomination (pennies through hundred dollar bills) to be returned to the user. Print out these results.
+

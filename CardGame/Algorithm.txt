@@ -1,0 +1,20 @@
+Card Game Project Algorithm
+Ryan Eades
+
+Output:
+The project will output all the cards in a normal 52 card deck. It will print a numbered list of the cards
+and assign five cards each to the computer and to the player. It will also print the
+a list of the five cards assigned to each player.
+
+Input:
+This program receives no input.
+
+Steps:
+
+1. Create a main function that looks exactly like Andy's.
+2. Define a clear deck function.
+	a. This function makes the list of cards all zeroes.
+3. Define a function that assigns cards to each "player"
+4. Define a showdeck function that shows all the cards.
+5. Define a showdeck function that shows all the cards in a players hand.
+

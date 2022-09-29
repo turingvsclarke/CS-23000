@@ -1,0 +1,10 @@
+import CardGameBB
+
+player = 0
+
+for in in range(5):
+
+    assignCard(player)
+
+showHand(player)
+

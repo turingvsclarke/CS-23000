@@ -1,0 +1,66 @@
+;; Multiplier that can handle any integer. First, check if the integers are zero.
+;; Second, make them both positive if they are negative. Finally, send them to a
+;; basic multiplier and store the product in address 0
+
+;; Store any two integers to be multiplied
+
+counter:25
+cntDn:-5
+product: 0
+
+;; If cntDn<0 and counter<0, convert them both to positive numbers
+;; via a "sign converter". Quit the process if either is zero
+
+start1:LOD cntDn
+	JMZ quit
+	JMN start2
+	JMP begin1
+start2:LOD counter
+	JMN start
+	JMZ quit
+    JMP start3
+
+;; Switch cntDn and counter if counter>0 and cntDn<0, since 
+;; basic multiplier can handle negative by positive
+  
+start3:	LOD counter
+        STO product
+    	LOD cntDn
+    	STO counter
+	    LOD product
+	    STO cntDn
+	    SUB product
+	    STO product
+	    JMP begin1
+
+;; If there are two negative values, subtract each value from itself
+;; twice, which will make it positive with the same magnitude
+
+start: LOD cntDn
+	SUB cntDn
+	SUB cntDn
+	STO cntDn
+	LOD counter
+	SUB counter
+	SUB counter
+	STO counter
+	JMP begin1
+
+
+;; Use the basic multiplier as before, which works for at least
+;; one non-negative
+
+begin1:LOD product
+	ADD counter
+	STO product
+    LOD cntDn
+	DEC
+	STO cntDn
+	JMZ quit
+	JMP begin1
+quit:LOD product
+	STO 0
+	HLT
+
+
+

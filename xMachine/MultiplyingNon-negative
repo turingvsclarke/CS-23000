@@ -1,0 +1,17 @@
+;;multiplying two numbers, one non-negative. Put non-negative as cntDn
+
+start:LOD cntDn
+	JMZ quit
+	JMN quit
+begin1:LOD product
+	ADD counter
+	STO product
+begin2:LOD cntDn
+	DEC
+	STO cntDn
+	JMZ quit
+	JMP begin1
+quit:HLT
+product:0
+counter:0
+cntDn:0
