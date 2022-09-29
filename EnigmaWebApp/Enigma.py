@@ -1,7 +1,7 @@
 import random
 import pdb
 
-alphabet = "abcdefghijklmnopqrstuvwxyz"
+alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 # We are going to have a class that describes the current overall state of the Enigma machine and its size. This number will determine the states 
 # of the individual rotors, so we are going to define a rotors attribute that will be a list of rotors.
@@ -27,7 +27,7 @@ class Enigma():
     def getSize(self):
         return self._size
     def setReflector(self,reflector):
-        self._reflector = reflector
+        self._reflector = reflector.upper()
     def getReflector(self):
         return self._reflector
     # This is a huge problem. Currently, we are creating new rotors each time we try to get the rotors of the Enigma.
@@ -65,7 +65,7 @@ class Rotor():
     # This is my class of rotor objects. It has three attributes: state, position, and rotor (the string of letters defining it)
     # Let's initialize the object. Note that its not passed a state because it doesn't really have its own state. Its state is dependent upon 
     # the state of the Enigma
-    def __init__ (self,position = 0,rotor = []):
+    def __init__ (self,position = 0,rotor = ""):
             object.__init__(self)
             self.setPosition(position)
             self.setrotor(rotor)
@@ -81,7 +81,7 @@ class Rotor():
         return self._position
 
     def setrotor(self,rotor):
-        self._rotor = rotor
+        self._rotor = rotor.upper()
 
     def getrotor(self):
         return self._rotor
@@ -124,7 +124,7 @@ def createReflector():
 
     global alphabet
 
-    # Create a reflector by picking a random \
+    # Create a reflector by picking a random string of paired letters (ath letter is b and bth letter is a for example)
     # Initiate a 26 character string
     Reflector = "0"*26
 
@@ -146,10 +146,9 @@ def encrypt(message,enigma):
     # Initialize an empty string that will eventually hold the fully encrypted text
     encryption = ""
     global alphabet
+    message = message.upper()
 
-    # store the alphabet string locally so that way we don't destroy it for future use
-    alphabet1 = alphabet
-
+    # If the value isn't in the alphabet, don't encrypt it
     # Iterate through each message, encrypting one letter at a time
     for x in range(len(message)):
 
@@ -157,30 +156,31 @@ def encrypt(message,enigma):
         # For each letter, we loop through the cryptography encryption function r times, r being the number of rotors, passing it the current
         # rotor key and the new encryption message, which switches each time. At the end of the for loop we should have the correct letter
         
-        rotors = enigma.getRotors()
-        #pdb.set_trace()
-        for y in range(len(enigma.getRotors())):
-            # Find the letter's place in the alphabet
+        if letter in alphabet:
+            rotors = enigma.getRotors()
+            #pdb.set_trace()
+            for y in range(len(enigma.getRotors())):
+                # Find the letter's place in the alphabet
+                index = alphabet.index(letter)
+                # Assign the letter to the value of the xth rotor key at that index and then start over. Each time its then encrypting an encryption
+                key = enigma.getRotorKey(y)
+                letter = key[index]
+
+            # Match to the correct letter via the reflector
             index = alphabet.index(letter)
-            # Assign the letter to the value of the xth rotor key at that index and then start over. Each time its then encrypting an encryption
-            key = enigma.getRotorKey(y)
+            letter = enigma.getReflector()[index]
 
-            letter = key[index]
+            # We now go backwards, finding which original letter would have given us the letter that pairs with the letter we actually got out of the reflector
+            while y>=0:
+                key=enigma.getRotorKey(y)
+                index = key.index(letter)
+                letter = alphabet[index]
+                y-=1
+            encryption = encryption + letter
 
-        # Match to the correct letter via the reflector
-        index = alphabet.index(letter)
-        letter = enigma.getReflector()[index]
-
-        while y>=0:
-            key=enigma.getRotorKey(y)
-            index = key.index(letter)
-            letter = alphabet[index]
-            y-=1
-        encryption = encryption + letter
-
-        # Rotate the Enigma after each letter has been translated
-        enigma.Rotate(1)
-        enigma.updateRotors()
+            # Rotate the Enigma after each letter has been translated
+            enigma.Rotate(1)
+            enigma.updateRotors()
 
     return encryption
 
